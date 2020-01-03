@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.forbitbd.financrr" >
+
+    <application
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".ui.finance.FinanceActivity"/>
+        <activity android:name=".ui.finance.report.FinanceReportActivity"/>
+        <activity android:name=".ui.finance.account.accountDetail.AccountDetailActivity"/>
+        <activity android:name=".ui.finance.transactionAdd.TransactionAddActivity"/>
+        <activity android:name=".ui.finance.transactionUpdate.TransactionUpdateActivity"/>
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
+    </application>
+</manifest>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/fab_calender"
+            app:cardBackgroundColor="@color/statusColor"
+            android:layout_marginEnd="@dimen/small_padding">
+            <TextView
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/account_name"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:id="@+id/date"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="@dimen/small_padding"
+            android:id="@+id/fab_calender"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/calendar"
+            android:tint="@color/colorAccent" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/default_margin"
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
