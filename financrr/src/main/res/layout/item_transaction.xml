@@ -3,64 +3,73 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/block_height"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/small_padding">
 
 
-
     <LinearLayout
-        android:layout_width="@dimen/block_height"
-        android:layout_height="@dimen/block_height"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="@dimen/transactionBlock"
+            android:layout_height="@dimen/transactionBlock"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/statusColor"
+                android:gravity="center|bottom"
+                android:id="@+id/date"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:text="12 Nov 2019"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/statusColor"
+                android:gravity="center|top"
+                android:id="@+id/month_year"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:text="12 Nov 2019"/>
+
+        </LinearLayout>
+
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/statusColor"
-            android:gravity="center|bottom"
-            android:id="@+id/date"
+            android:layout_marginStart="@dimen/very_small_padding"
+            android:layout_width="@dimen/transactionBlock"
+            android:layout_height="@dimen/transactionBlock"
+            android:id="@+id/amount"
+            android:textSize="12sp"
+            android:paddingEnd="@dimen/small_padding"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:text="12 Nov 2019"/>
+            android:background="@color/colorAccent"
+            android:gravity="center"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/statusColor"
-            android:gravity="center|top"
-            android:id="@+id/month_year"
-            android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:text="12 Nov 2019"/>
+        <ImageView
+            android:layout_marginStart="@dimen/very_small_padding"
+            android:layout_width="@dimen/transactionBlock"
+            android:layout_height="@dimen/transactionBlock"
+            android:id="@+id/image"
+            android:scaleType="centerCrop"/>
 
     </LinearLayout>
 
 
-    <TextView
-        android:layout_marginStart="@dimen/very_small_padding"
-        android:layout_width="@dimen/block_height"
-        android:layout_height="@dimen/block_height"
-        android:id="@+id/amount"
-        android:textSize="14sp"
-        android:paddingEnd="@dimen/small_padding"
-        android:textColor="@android:color/white"
-        android:background="@color/colorAccent"
-        android:gravity="center|end"/>
-
-    <ImageView
-        android:layout_marginStart="@dimen/very_small_padding"
-        android:layout_width="@dimen/block_height"
-        android:layout_height="@dimen/block_height"
-        android:id="@+id/image"
-        android:scaleType="centerCrop"/>
 
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/block_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/transactionBlock"
         android:layout_marginStart="@dimen/very_small_padding">
 
         <LinearLayout
@@ -71,14 +80,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/small_padding"
+                android:padding="@dimen/very_small_padding"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 android:text="From Cash to Hardware"
                 android:id="@+id/account"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/small_padding"
+                android:paddingStart="@dimen/very_small_padding"
                 android:text="Purchase Nut Bolt From ABC Store"
                 android:textSize="12sp"
                 android:id="@+id/purpose"/>
