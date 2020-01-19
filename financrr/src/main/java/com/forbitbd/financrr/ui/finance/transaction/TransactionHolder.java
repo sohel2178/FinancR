@@ -56,7 +56,7 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
 
         tvDate.setText(dateArr[0]);
         tvMonthYear.setText(dateArr[1].concat(" - ").concat(dateArr[2]));
-        tvAccount.setText("From ".concat(transactionResponse.getFrom().getName())
+        tvAccount.setText(transactionResponse.getFrom().getName()
         .concat(" to ").concat(transactionResponse.getTo().getName()));
 
         tvPurpose.setText(transactionResponse.getPurpose());
