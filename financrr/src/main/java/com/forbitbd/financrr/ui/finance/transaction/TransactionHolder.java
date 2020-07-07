@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 public class TransactionHolder extends BaseHolder<TransactionResponse, TransactionListener> implements View.OnClickListener {
     TextView tvDate,tvAccount,tvPurpose,tvAmount,tvMonthYear;
-    ImageView ivImage;
+    ImageView ivAttach;
 
     private TransactionListener listener;
 
@@ -27,9 +27,9 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
         tvPurpose = itemView.findViewById(R.id.purpose);
         tvAmount = itemView.findViewById(R.id.amount);
 
-        ivImage = itemView.findViewById(R.id.image);
+        ivAttach = itemView.findViewById(R.id.attach);
 
-        ivImage.setOnClickListener(this);
+        ivAttach.setOnClickListener(this);
 
         itemView.setOnClickListener(this);
     }
@@ -38,7 +38,7 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
     public void onClick(View view) {
         if(view==itemView){
             listener.onItemClick(getAdapterPosition());
-        }else if(view==ivImage){
+        }else if(view==ivAttach){
             listener.onImageClick(getAdapterPosition());
         }
     }
@@ -46,9 +46,9 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
     @Override
     public void bind(TransactionResponse transactionResponse) {
 
-        Picasso.with(itemView.getContext())
+      /*  Picasso.with(itemView.getContext())
                 .load(transactionResponse.getImage())
-                .into(ivImage);
+                .into(ivImage);*/
 
         String date = MyUtil.getStringDate(transactionResponse.getDate());
 

@@ -12,6 +12,7 @@ public class Account implements Serializable {
     private String project;
     private int type;
     private double amount;
+    private double opening_balance;
     private Date created_at;
 
 
@@ -66,6 +67,13 @@ public class Account implements Serializable {
         this.project = project;
     }
 
+    public double getOpening_balance() {
+        return opening_balance;
+    }
+
+    public void setOpening_balance(double opening_balance) {
+        this.opening_balance = opening_balance;
+    }
 
     @NonNull
     @Override

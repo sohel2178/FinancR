@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FinancRR</string>
+    <string name="opening_balance">Opening Balance</string>
+    <string name="account_type">Account Type</string>
 </resources>

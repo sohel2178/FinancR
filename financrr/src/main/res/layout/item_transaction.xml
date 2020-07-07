@@ -6,6 +6,17 @@
     android:layout_height="@dimen/block_height"
     android:layout_marginBottom="@dimen/small_padding">
 
+    <ImageView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:id="@+id/attach"
+        android:src="@drawable/attach"
+        style="@style/ProjectIcon"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/small_padding"
+        android:layout_marginEnd="@dimen/small_padding"
+        />
+
 
 
     <LinearLayout
@@ -43,18 +54,10 @@
         android:layout_width="@dimen/block_height"
         android:layout_height="@dimen/block_height"
         android:id="@+id/amount"
-        android:textSize="14sp"
         android:paddingEnd="@dimen/small_padding"
         android:textColor="@android:color/white"
         android:background="@color/colorAccent"
         android:gravity="center|end"/>
-
-    <ImageView
-        android:layout_marginStart="@dimen/very_small_padding"
-        android:layout_width="@dimen/block_height"
-        android:layout_height="@dimen/block_height"
-        android:id="@+id/image"
-        android:scaleType="centerCrop"/>
 
 
 

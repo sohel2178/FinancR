@@ -47,8 +47,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-    implementation 'com.github.sohel2178:AndroidUtils:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.github.sohel2178:AndroidUtils:1.1.6'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     // MP Android Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'

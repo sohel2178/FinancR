@@ -31,20 +31,53 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ti_account_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/account_name">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/account_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/account_name"
                     android:fontFamily="@font/arima_madurai_medium"
                     android:inputType="text"
                     android:theme="@style/TIStyle" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_opening_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/opening_balance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_opening_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arima_madurai_medium"
+                    android:inputType="numberDecimal"
+                    android:theme="@style/TIStyle" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_account_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="@string/account_type">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:id="@+id/act_account_type"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_padding"
@@ -59,7 +92,7 @@
                 android:dropDownWidth="wrap_content"
                 android:background="@drawable/bg_spinner">
 
-            </androidx.appcompat.widget.AppCompatSpinner>
+            </androidx.appcompat.widget.AppCompatSpinner>-->
 
         </LinearLayout>
 

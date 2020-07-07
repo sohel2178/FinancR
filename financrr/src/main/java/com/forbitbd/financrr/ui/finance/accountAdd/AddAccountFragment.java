@@ -3,9 +3,11 @@ package com.forbitbd.financrr.ui.finance.accountAdd;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.ui.finance.FinanceActivity;
 import com.forbitbd.financrr.ui.finance.account.AccountFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -30,9 +33,9 @@ import com.google.android.material.textfield.TextInputLayout;
  */
 public class AddAccountFragment extends DialogFragment implements AddAccountContract.View, View.OnClickListener {
 
-    private EditText etName;
-    private TextInputLayout tiName;
-    private AppCompatSpinner spType;
+    private TextInputEditText etName,etOpeningBalance;
+    private TextInputLayout tiName,tiOpeningBalance,tiAccountType;
+    private AutoCompleteTextView actAccountType;
 
     private AddAccountPresenter mPresenter;
 
@@ -82,8 +85,11 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
         etName = view.findViewById(R.id.account_name);
         tiName = view.findViewById(R.id.ti_account_name);
-        spType = view.findViewById(R.id.sp_types);
-        spType.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.account_type)));
+        etOpeningBalance = view.findViewById(R.id.et_opening_balance);
+        tiOpeningBalance = view.findViewById(R.id.ti_opening_balance);
+        tiAccountType = view.findViewById(R.id.ti_account_type);
+        actAccountType = view.findViewById(R.id.act_account_type);
+        actAccountType.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.account_type)));
 
         btnSave.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -105,7 +111,13 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
             account.setProject(project.get_id());
             account.setName(name);
-            account.setType(spType.getSelectedItemPosition());
+            if(getPosition(actAccountType.getText().toString().trim())>-1){
+                account.setType(getPosition(actAccountType.getText().toString().trim()));
+            }else{
+                account.setType(0);
+            }
+
+
 
             boolean valid = mPresenter.validate(account);
 
@@ -125,11 +137,23 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
     }
 
+    private int getPosition(String value){
+        String[] arr = getResources().getStringArray(R.array.account_type);
+
+        for (int i=0;i<arr.length;i++){
+            if(arr[i].equals(value)){
+                return i;
+            }
+        }
+
+        return -1;
+
+    }
+
     @Override
     public void bind(Account account) {
         etName.setText(account.getName());
-        spType.setSelection(account.getType());
-
+        actAccountType.setText(getResources().getStringArray(R.array.account_type)[account.getType()],false);
         tvTitle.setText("Account Update Form");
         btnSave.setText("Update");
     }
