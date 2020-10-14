@@ -1,6 +1,7 @@
 package com.forbitbd.financrr.ui.finance.report;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.forbitbd.financrr.ui.finance.cashFlow.CashFlowFragment;
 import com.forbitbd.financrr.ui.finance.report.dailyTransaction.DailyTransactionFragment;
 import com.forbitbd.financrr.ui.finance.report.monthlyTransaction.MonthlyTransactionFragment;
 import com.forbitbd.financrr.ui.finance.report.trialBalance.TrialBalanceFragment;
+import com.forbitbd.financrr.views.MyViewPager;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class FinanceReportActivity extends PrebaseActivity
     private FinanceReportPresenter mPresenter;
 
     private TextView tvStatus;
-    private ViewPager viewPager;
+    private MyViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
 
     private List<TransactionResponse> transactionList;
@@ -113,6 +115,12 @@ public class FinanceReportActivity extends PrebaseActivity
 
             @Override
             public void onPageSelected(int position) {
+                Log.d("UUUUUU",position+"");
+                if(position==3){
+                    viewPager.setPagingEnabled(false);
+                }else{
+                    viewPager.setPagingEnabled(true);
+                }
                 tvStatus.setText(titleArray[position]);
             }
 

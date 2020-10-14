@@ -1,18 +1,27 @@
 package com.forbitbd.financrr.ui.finance;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.forbitbd.androidutils.BuildConfig;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -29,6 +38,12 @@ import com.forbitbd.financrr.ui.finance.transactionUpdate.TransactionUpdateActiv
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.File;
+
+import okhttp3.ResponseBody;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class FinanceActivity extends PrebaseActivity implements FinanceContract.View, View.OnClickListener {
 
     private FinancePresenter mPresenter;
@@ -36,13 +51,14 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private static final int TRANSACTION_ADD=8000;
     private static final int TRANSACTION_UPDATE_DELETE=10000;
 
+
     private Project project;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private ViewPager viewPager; private static final int READ_WRITE_PERMISSION=12000;
     private ViewPagerAdapter pagerAdapter;
     private SearchView searchView;
 
-    private FloatingActionButton fabCreateAccount,fabAddTransaction,fabReport,fabDownload;
+    private FloatingActionButton fabCreateAccount,fabAddTransaction,fabReport,fabDownload,fabClosing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +104,13 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         fabAddTransaction = findViewById(R.id.fab_add_transaction);
         fabReport = findViewById(R.id.fab_report);
         fabDownload = findViewById(R.id.fab_download);
+        fabClosing = findViewById(R.id.fab_closing);
 
         fabCreateAccount.setOnClickListener(this);
         fabAddTransaction.setOnClickListener(this);
         fabReport.setOnClickListener(this);
         fabDownload.setOnClickListener(this);
+        fabClosing.setOnClickListener(this);
     }
 
     private void changeQueryText(int position) {
@@ -195,6 +213,11 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     }
 
     @Override
+    public String saveFile(ResponseBody responseBody) {
+        return saveTaskFile("Construction Manager",project.getName(),"Transactions","transaction.xlsx",responseBody);
+    }
+
+    @Override
     public void startAddTransactionActivity() {
         Intent intent = new Intent(getApplicationContext(), TransactionAddActivity.class);
         Bundle bundle = new Bundle();
@@ -240,7 +263,10 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         }else if(view==fabReport){
             mPresenter.startFinanceReportActivity();
         }else if(view==fabDownload){
-
+            requestFileAfterPermission();
+        }else if(view==fabClosing){
+            Toast.makeText(this, "Closing Click", Toast.LENGTH_SHORT).show();
+            mPresenter.closing(project);
         }
     }
 
@@ -272,5 +298,27 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
             }
 
         }
+    }
+
+    @AfterPermissionGranted(READ_WRITE_PERMISSION)
+    private void requestFileAfterPermission() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
+            //sendDownloadRequest();
+            Log.d("UUUUUUUU","Called");
+            mPresenter.downloadFile(project);
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "App need to Permission for Read and Write",
+                    READ_WRITE_PERMISSION, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, this);
     }
 }

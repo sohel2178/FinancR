@@ -33,6 +33,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_date">
 
                     <EditText
@@ -41,65 +42,57 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/transaction_date"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:focusable="false"/>
 
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_marginTop="@dimen/medium_padding"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/ti_from">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                        android:id="@+id/et_from"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="From"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
-                        android:padding="@dimen/medium_padding"/>
+                        android:hint="@string/transaction_from"
+                        android:fontFamily="@font/arima_madurai_medium"
+                        android:inputType="text"/>
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/from"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@drawable/bg_spinner"
-                        android:dropDownWidth="wrap_content"/>
 
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_marginTop="@dimen/medium_padding"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/ti_to">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                        android:id="@+id/et_to"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="To"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
-                        android:padding="@dimen/medium_padding"/>
+                        android:hint="@string/transaction_to"
+                        android:fontFamily="@font/arima_madurai_medium"
+                        android:inputType="text"/>
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/to"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@drawable/bg_spinner"
-                        android:dropDownWidth="wrap_content"/>
 
-                </LinearLayout>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_padding"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_invoice">
 
                     <EditText
@@ -115,6 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_padding"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_purpose">
 
                     <EditText
@@ -124,12 +118,14 @@
                         android:hint="@string/purpose"
                         android:fontFamily="@font/arima_madurai_medium"
                         android:inputType="text"/>
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_padding"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_amount">
 
                     <EditText

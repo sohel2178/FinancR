@@ -4,8 +4,8 @@ package com.forbitbd.financrr.ui.finance.account;
 
 import android.util.Log;
 
+import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.financrr.api.ApiClient;
-import com.forbitbd.financrr.api.ServiceGenerator;
 import com.forbitbd.financrr.models.Account;
 
 import java.util.List;

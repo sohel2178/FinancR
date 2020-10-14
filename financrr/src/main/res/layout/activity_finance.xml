@@ -85,6 +85,18 @@
         fab:menu_fab_show_animation="@anim/show_from_bottom"
         fab:menu_fab_hide_animation="@anim/hide_to_bottom">
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_closing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_notification_clear_all"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_colorRipple="@color/light_grey"
+            fab:fab_size="mini"
+            android:visibility="gone"
+            fab:fab_label="@string/closing" />
+
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_download"

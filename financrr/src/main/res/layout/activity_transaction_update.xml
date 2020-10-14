@@ -33,6 +33,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_date">
 
                     <EditText
@@ -48,7 +49,45 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/ti_from">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                        android:id="@+id/et_from"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/transaction_from"
+                        android:fontFamily="@font/arima_madurai_medium"
+                        android:inputType="text"/>
+
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/ti_to">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                        android:id="@+id/et_to"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/transaction_to"
+                        android:fontFamily="@font/arima_madurai_medium"
+                        android:inputType="text"/>
+
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+               <!-- <LinearLayout
                     android:layout_marginTop="@dimen/medium_padding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -94,11 +133,12 @@
                         android:background="@drawable/bg_spinner"
                         android:dropDownWidth="wrap_content"/>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginTop="@dimen/medium_padding"
                     android:id="@+id/ti_invoice">
 
@@ -114,6 +154,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginTop="@dimen/medium_padding"
                     android:id="@+id/ti_purpose">
 
@@ -130,6 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_padding"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_amount">
 
                     <EditText

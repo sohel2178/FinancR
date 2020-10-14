@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.forbitbd.androidutils.dialog.DatePickerListener;
@@ -42,16 +44,20 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
     private TransactionUpdatePresenter mPresenter;
 
 
-    private TextInputLayout tiDate,tiInvoice,tiPurpose,tiAmount;
+    private TextInputLayout tiDate,tiInvoice,tiPurpose,tiAmount,tiFrom,tiTo;
     private EditText etDate,etInvoice,etPurpose,etAmount;
 
+    private AppCompatAutoCompleteTextView etFrom,etTo;
+
     private ImageView ivImage;
-    private AppCompatSpinner spFrom,spTo;
 
     private ArrayAdapter<Account> fromAdapter;
     private ArrayAdapter<Account> toAdapter;
 
     private MaterialButton btnBrowse,btnSave,btnDelete;
+
+    private int toPosition =-1;
+    private int fromPosition =-1;
 
 
     private byte[] bytes;
@@ -83,23 +89,39 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         tiInvoice = findViewById(R.id.ti_invoice);
         tiPurpose = findViewById(R.id.ti_purpose);
         tiAmount = findViewById(R.id.ti_amount);
+        tiFrom = findViewById(R.id.ti_from);
+        tiTo = findViewById(R.id.ti_to);
 
         etDate = findViewById(R.id.date);
         etInvoice = findViewById(R.id.invoice);
         etPurpose = findViewById(R.id.purpose);
         etAmount = findViewById(R.id.amount);
+        etTo = findViewById(R.id.et_to);
+        etFrom = findViewById(R.id.et_from);
+
+        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                toPosition=i;
+            }
+        });
+
+        etFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fromPosition = i;
+            }
+        });
 
 
         ivImage = findViewById(R.id.image);
 
-        spFrom = findViewById(R.id.from);
-        spTo = findViewById(R.id.to);
 
         fromAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
         toAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
 
-        spTo.setAdapter(toAdapter);
-        spFrom.setAdapter(fromAdapter);
+        etTo.setAdapter(toAdapter);
+        etFrom.setAdapter(fromAdapter);
 
         mPresenter.getProjectAccount(project.get_id());
 
@@ -123,8 +145,19 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         }else if(view==btnSave){
             transactionResponse.setProject(project.get_id());
             transactionResponse.setDate(date);
-            transactionResponse.setFrom(((Account) spFrom.getSelectedItem()));
-            transactionResponse.setTo(((Account) spTo.getSelectedItem()));
+
+            Account to = null;
+            Account from = null;
+
+            if(fromPosition !=-1){
+                from = fromAdapter.getItem(fromPosition);
+                transactionResponse.setFrom(from);
+            }
+
+            if(toPosition!=-1){
+                to = toAdapter.getItem(toPosition);
+                transactionResponse.setTo(to);
+            }
             transactionResponse.setInvoice_no(etInvoice.getText().toString().trim());
             transactionResponse.setPurpose(etPurpose.getText().toString().trim());
 
@@ -161,26 +194,44 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
 
     @Override
     public void clearPreError() {
-        tiDate.setEnabled(false);
-        tiPurpose.setEnabled(false);
-        tiInvoice.setEnabled(false);
-        tiPurpose.setEnabled(false);
+        tiDate.setErrorEnabled(false);
+        tiPurpose.setErrorEnabled(false);
+        tiInvoice.setErrorEnabled(false);
+        tiPurpose.setErrorEnabled(false);
+        tiFrom.setErrorEnabled(false);
+        tiTo.setErrorEnabled(false);
+        tiAmount.setErrorEnabled(false);
     }
 
     @Override
     public void showError(String message, int fieldId) {
         switch (fieldId){
             case 1:
+                tiFrom.setError(message);
+                etFrom.requestFocus();
+                break;
+
+            case 2:
+                tiTo.setError(message);
+                etTo.requestFocus();
+                break;
+
+            case 3:
+                tiFrom.setError(message);
+                tiTo.setError(message);
+                etFrom.requestFocus();
+                break;
+            case 4:
                 tiInvoice.setError(message);
                 etInvoice.requestFocus();
                 break;
 
-            case 2:
+            case 5:
                 tiPurpose.setError(message);
                 etPurpose.requestFocus();
                 break;
 
-            case 3:
+            case 6:
                 tiAmount.setError(message);
                 etAmount.requestFocus();
                 break;
@@ -214,13 +265,6 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
     public void updateSpinnerAdapter(List<Account> accountList) {
         fromAdapter.addAll(accountList);
         toAdapter.addAll(accountList);
-
-        int toPosition = getPosition(accountList,transactionResponse.getTo());
-        int fromPosition = getPosition(accountList,transactionResponse.getFrom());
-
-        spFrom.setSelection(fromPosition);
-        spTo.setSelection(toPosition);
-
         mPresenter.bind(transactionResponse);
     }
 
@@ -232,6 +276,9 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         etInvoice.setText(transactionResponse.getInvoice_no());
         etPurpose.setText(transactionResponse.getPurpose());
         etAmount.setText(String.valueOf(transactionResponse.getAmount()));
+
+        etFrom.setText(transactionResponse.getFrom().getName());
+        etTo.setText(transactionResponse.getTo().getName());
 
         Picasso.with(this)
                 .load(transactionResponse.getImage())
@@ -293,13 +340,4 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         }
     }
 
-
-    private int getPosition(List<Account> accountList, Account account){
-        for (Account x: accountList){
-            if(x.get_id().equals(account.get_id())){
-                return accountList.indexOf(x);
-            }
-        }
-        return -1;
-    }
 }

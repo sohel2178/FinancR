@@ -1,8 +1,8 @@
 package com.forbitbd.financrr.ui.finance.report;
 
 
+import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.financrr.api.ApiClient;
-import com.forbitbd.financrr.api.ServiceGenerator;
 import com.forbitbd.financrr.models.FinanceResponce;
 
 import retrofit2.Call;

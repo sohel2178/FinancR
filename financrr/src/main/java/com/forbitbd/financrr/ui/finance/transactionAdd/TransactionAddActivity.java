@@ -4,13 +4,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 import com.forbitbd.androidutils.dialog.DatePickerListener;
 import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
@@ -37,14 +39,17 @@ public class TransactionAddActivity extends PrebaseActivity
 
     private TransactionAddPresenter mPresenter;
 
-    private TextInputLayout tiDate,tiInvoice,tiPurpose,tiAmount;
+    private TextInputLayout tiDate,tiInvoice,tiPurpose,tiAmount,tiFrom,tiTo;
     private EditText etDate,etInvoice,etPurpose,etAmount;
 
     private ImageView ivImage;
-    private AppCompatSpinner spFrom,spTo;
+
+    private AppCompatAutoCompleteTextView etFrom,etTo;
 
     private ArrayAdapter<Account> fromAdapter;
     private ArrayAdapter<Account> toAdapter;
+    private int toPosition =-1;
+    private int fromPosition =-1;
 
     private Project project;
 
@@ -73,25 +78,40 @@ public class TransactionAddActivity extends PrebaseActivity
         tiInvoice = findViewById(R.id.ti_invoice);
         tiPurpose = findViewById(R.id.ti_purpose);
         tiAmount = findViewById(R.id.ti_amount);
+        tiFrom = findViewById(R.id.ti_from);
+        tiTo = findViewById(R.id.ti_to);
 
         etDate = findViewById(R.id.date);
         etInvoice = findViewById(R.id.invoice);
         etPurpose = findViewById(R.id.purpose);
         etAmount = findViewById(R.id.amount);
+        etFrom = findViewById(R.id.et_from);
+        etTo = findViewById(R.id.et_to);
+
+        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                toPosition=i;
+            }
+        });
+
+        etFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fromPosition = i;
+            }
+        });
 
         date = new Date();
         etDate.setText(MyUtil.getStringDate(date));
 
         ivImage = findViewById(R.id.image);
 
-        spFrom = findViewById(R.id.from);
-        spTo = findViewById(R.id.to);
-
         fromAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
         toAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
 
-        spTo.setAdapter(toAdapter);
-        spFrom.setAdapter(fromAdapter);
+        etTo.setAdapter(toAdapter);
+        etFrom.setAdapter(fromAdapter);
 
         mPresenter.getProjectAccount(project.get_id());
 
@@ -106,26 +126,44 @@ public class TransactionAddActivity extends PrebaseActivity
 
     @Override
     public void clearPreError() {
-        tiDate.setEnabled(false);
-        tiPurpose.setEnabled(false);
-        tiInvoice.setEnabled(false);
-        tiPurpose.setEnabled(false);
+        tiDate.setErrorEnabled(false);
+        tiPurpose.setErrorEnabled(false);
+        tiInvoice.setErrorEnabled(false);
+        tiPurpose.setErrorEnabled(false);
+        tiFrom.setErrorEnabled(false);
+        tiTo.setErrorEnabled(false);
+        tiAmount.setErrorEnabled(false);
     }
 
     @Override
     public void showError(String message, int fieldId) {
         switch (fieldId){
             case 1:
+                tiFrom.setError(message);
+                etFrom.requestFocus();
+                break;
+
+            case 2:
+                tiTo.setError(message);
+                etTo.requestFocus();
+                break;
+
+            case 3:
+                tiFrom.setError(message);
+                tiTo.setError(message);
+                etFrom.requestFocus();
+                break;
+            case 4:
                 tiInvoice.setError(message);
                 etInvoice.requestFocus();
                 break;
 
-            case 2:
+            case 5:
                 tiPurpose.setError(message);
                 etPurpose.requestFocus();
                 break;
 
-            case 3:
+            case 6:
                 tiAmount.setError(message);
                 etAmount.requestFocus();
                 break;
@@ -181,8 +219,20 @@ public class TransactionAddActivity extends PrebaseActivity
             Transaction transaction = new Transaction();
             transaction.setProject(project.get_id());
             transaction.setDate(date);
-            transaction.setFrom(((Account) spFrom.getSelectedItem()).get_id());
-            transaction.setTo(((Account) spTo.getSelectedItem()).get_id());
+            Account to = null;
+            Account from = null;
+
+            if(fromPosition !=-1){
+                from = fromAdapter.getItem(fromPosition);
+                transaction.setFrom(from.get_id());
+            }
+
+            if(toPosition!=-1){
+                to = toAdapter.getItem(toPosition);
+                transaction.setTo(to.get_id());
+            }
+
+
             transaction.setInvoice_no(etInvoice.getText().toString().trim());
             transaction.setPurpose(etPurpose.getText().toString().trim());
 
@@ -192,17 +242,21 @@ public class TransactionAddActivity extends PrebaseActivity
                 e.printStackTrace();
             }
 
+            Log.d("Call",transaction.getDate().toString());
+
             boolean valid =mPresenter.validate(transaction);
 
             if(!valid){
                 return;
             }
 
-            if(bytes==null){
+            mPresenter.saveTransaction(transaction,bytes);
+
+            /*if(bytes==null){
                 showToast("Please select a Transaction Image");
             }else{
-                mPresenter.saveTransaction(transaction,bytes);
-            }
+
+            }*/
 
         }
     }

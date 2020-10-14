@@ -1,9 +1,9 @@
 package com.forbitbd.financrr.ui.finance.transactionUpdate;
 
 
+import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.financrr.api.ApiClient;
-import com.forbitbd.financrr.api.ServiceGenerator;
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.models.TransactionResponse;
 
@@ -73,23 +73,33 @@ public class TransactionUpdatePresenter implements TransactionUpdateContract.Pre
             return false;
         }
 
+        if(transaction.getFrom()==null){
+            mView.showError("Select Account From Drop down",1);
+            return false;
+        }
+
+        if(transaction.getTo()==null){
+            mView.showError("Select Account From Drop down",2);
+            return false;
+        }
+
         if(transaction.getFrom().get_id().equals(transaction.getTo().get_id())){
-            mView.showToast("Transaction is not valid between Same Account !!!");
+            mView.showError("Transaction is not valid between Same Account !!!",3);
             return false;
         }
 
         if(transaction.getInvoice_no().equals("")){
-            mView.showError("Empty Field is Not Allowed",1);
+            mView.showError("Empty Field is Not Allowed",4);
             return false;
         }
 
         if(transaction.getPurpose().equals("")){
-            mView.showError("Empty Field is Not Allowed",2);
+            mView.showError("Empty Field is Not Allowed",5);
             return false;
         }
 
         if(transaction.getAmount()<=0){
-            mView.showError("Transaction Amount Should be a Positive Value",3);
+            mView.showError("Transaction Amount Should be a Positive Value",6);
             return false;
         }
 

@@ -42,7 +42,7 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
     private ImageView ivIndicator;
     private int height;
     private boolean isExpand;
-    private TextView tvTitle,tvTransactionCount,tvDebit,tvCredit,tvBalanceText,tvBalance;
+    private TextView tvTitle,tvTransactionCount,tvDebit,tvCredit,tvBalanceText,tvBalance,tvOpeningBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,7 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
         tvCredit = findViewById(R.id.credit);
         tvBalanceText = findViewById(R.id.balance_txt);
         tvBalance = findViewById(R.id.balance);
+        tvOpeningBalance = findViewById(R.id.opening_balance);
 
 
 
@@ -128,9 +129,10 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
     public void renderInfo(int count, double debit, double credit, double balance, String text) {
         tvTitle.setText("General Info of ".concat(account.getName()));
         tvTransactionCount.setText(String.valueOf(count));
+        tvOpeningBalance.setText(String.valueOf(account.getOpening_balance()));
         tvDebit.setText(String.valueOf(debit));
         tvCredit.setText(String.valueOf(credit));
-        tvBalance.setText(String.valueOf(balance));
+        tvBalance.setText(String.valueOf(account.getOpening_balance()+debit-credit));
         tvBalanceText.setText(text);
     }
 

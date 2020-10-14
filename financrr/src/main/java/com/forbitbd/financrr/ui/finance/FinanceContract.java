@@ -6,6 +6,8 @@ import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.models.TransactionResponse;
 
+import okhttp3.ResponseBody;
+
 public interface FinanceContract {
 
     interface Presenter{
@@ -13,6 +15,8 @@ public interface FinanceContract {
         void showAccountAddDialog();
         void startAddTransactionActivity();
         void startFinanceReportActivity();
+        void downloadFile(Project project);
+        void closing(Project project);
     }
 
     interface View{
@@ -20,6 +24,10 @@ public interface FinanceContract {
         void filter(String query);
         void showAccountAddDialog();
         void addAccount(Account account);
+        void showProgressDialog();
+        void hideProgressDialog();
+        String saveFile(ResponseBody responseBody);
+        void openFile(String path);
         void startAddTransactionActivity();
         void startFinanceReportActivity();
         void removeRelatedTransactions(Account account);

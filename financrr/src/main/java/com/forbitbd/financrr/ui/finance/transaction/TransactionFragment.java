@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -147,7 +148,11 @@ public class TransactionFragment extends FinanceBaseFragment
 
     @Override
     public void onImageClick(int position) {
-//        Log.d("HHHHHHH",adapter.getItem(position).getImage());
-        startZoomImageActivity(adapter.getItem(position).getImage());
+        if(adapter.getItem(position).getImage()==null){
+            Toast.makeText(getContext(), "No Attachment Found", Toast.LENGTH_SHORT).show();
+        }else{
+            startZoomImageActivity(adapter.getItem(position).getImage());
+        }
+
     }
 }

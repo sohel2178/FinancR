@@ -3,18 +3,15 @@ package com.forbitbd.financrr.ui.finance.accountAdd;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -104,6 +101,7 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
         if(view==btnSave){
             String name = etName.getText().toString().trim();
+            String openBal = etOpeningBalance.getText().toString().trim();
 
             if(account==null){
                 account = new Account();
@@ -116,6 +114,7 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
             }else{
                 account.setType(0);
             }
+            account.setOpening_balance(Double.parseDouble(openBal));
 
 
 
@@ -153,6 +152,7 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
     @Override
     public void bind(Account account) {
         etName.setText(account.getName());
+        etOpeningBalance.setText(String.valueOf(account.getOpening_balance()));
         actAccountType.setText(getResources().getStringArray(R.array.account_type)[account.getType()],false);
         tvTitle.setText("Account Update Form");
         btnSave.setText("Update");
@@ -168,6 +168,8 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
     @Override
     public void clearPreError() {
         tiName.setErrorEnabled(false);
+        tiAccountType.setErrorEnabled(false);
+        tiOpeningBalance.setErrorEnabled(false);
     }
 
     @Override
