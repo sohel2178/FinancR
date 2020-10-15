@@ -33,7 +33,7 @@ public interface ApiClient {
     @GET("/civil/api/projects/{project_id}/accounts")
     Call<List<Account>> getProjectAccounts(@Path("project_id") String projectId);
 
-    @POST("/civil/civil/api/projects/{project_id}/accounts")
+    @POST("/civil/api/projects/{project_id}/accounts")
     Call<Account> saveAccount(@Path("project_id") String projectId, @Body Account account);
 
     @PUT("/civil/api/projects/{project_id}/accounts/{account_id}")
