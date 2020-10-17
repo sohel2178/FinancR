@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,6 +70,8 @@ public class TransactionAddActivity extends PrebaseActivity
     private void initView() {
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Transaction Entry Form");
+
+        setupBannerAd(R.id.adView);
 
 
 
@@ -242,8 +243,6 @@ public class TransactionAddActivity extends PrebaseActivity
                 e.printStackTrace();
             }
 
-            Log.d("Call",transaction.getDate().toString());
-
             boolean valid =mPresenter.validate(transaction);
 
             if(!valid){
@@ -276,7 +275,6 @@ public class TransactionAddActivity extends PrebaseActivity
                         return;
                     }
 
-//                    Bitmap scaledBitMap = MyUtil.getScaledBitmap(bitmap,200,200);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 80 /*ignored for PNG*/, bos);
                     bytes = bos.toByteArray();

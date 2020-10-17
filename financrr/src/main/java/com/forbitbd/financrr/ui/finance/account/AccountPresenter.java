@@ -2,7 +2,6 @@ package com.forbitbd.financrr.ui.finance.account;
 
 
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.financrr.api.ApiClient;
@@ -43,7 +42,6 @@ public class AccountPresenter implements AccountContract.Presenter {
                     @Override
                     public void onFailure(Call<List<Account>> call, Throwable t) {
                         mView.hideDialog();
-                        Log.d("HHHHH","Error ".concat(t.getMessage()));
                     }
                 });
     }

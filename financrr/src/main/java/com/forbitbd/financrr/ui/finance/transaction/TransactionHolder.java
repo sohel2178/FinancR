@@ -8,7 +8,6 @@ import com.forbitbd.androidutils.baseAdapter.BaseHolder;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.TransactionResponse;
-import com.squareup.picasso.Picasso;
 
 
 public class TransactionHolder extends BaseHolder<TransactionResponse, TransactionListener> implements View.OnClickListener {

@@ -2,7 +2,6 @@ package com.forbitbd.financrr.ui.finance.transactionAdd;
 
 
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.androidutils.utils.MyUtil;
@@ -73,7 +72,6 @@ public class TransactionAddPresenter implements TransactionAddContract.Presenter
         }
 
         if( transaction.getFrom()==null || transaction.getFrom().equals("")){
-            Log.d("Call","Call");
             mView.showError("Choose an Account from Dropdown",1);
             return false;
         }

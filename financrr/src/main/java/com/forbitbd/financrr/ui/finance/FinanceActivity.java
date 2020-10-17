@@ -2,13 +2,9 @@ package com.forbitbd.financrr.ui.finance;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.forbitbd.androidutils.BuildConfig;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -38,7 +32,6 @@ import com.forbitbd.financrr.ui.finance.transactionUpdate.TransactionUpdateActiv
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.File;
 
 import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -75,6 +68,8 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private void initView() {
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(getString(R.string.finance));
+
+        setupBannerAd(R.id.adView);
 
 
         viewPager = findViewById(R.id.viewpager);
@@ -304,8 +299,6 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private void requestFileAfterPermission() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
-            //sendDownloadRequest();
-            Log.d("UUUUUUUU","Called");
             mPresenter.downloadFile(project);
         } else {
             // Do not have permissions, request them now

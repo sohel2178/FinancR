@@ -1,7 +1,6 @@
 package com.forbitbd.financrr.ui.finance.report;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -57,6 +56,8 @@ public class FinanceReportActivity extends PrebaseActivity
     private void initView() {
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Finance Report");
+
+        setupBannerAd(R.id.adView);
 
          tvPrev = findViewById(R.id.prev);
          tvNext = findViewById(R.id.next);
@@ -115,7 +116,6 @@ public class FinanceReportActivity extends PrebaseActivity
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("UUUUUU",position+"");
                 if(position==3){
                     viewPager.setPagingEnabled(false);
                 }else{

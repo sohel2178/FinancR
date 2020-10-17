@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".ui.finance.report.FinanceReportActivity">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/colorPrimary"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/adView">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/month_container"
-        android:layout_margin="@dimen/small_padding"
-        android:layout_below="@+id/toolbar">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:background="@color/colorPrimary"/>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/state_container">
+            android:id="@+id/month_container"
+            android:layout_margin="@dimen/small_padding"
+            android:layout_below="@+id/toolbar">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/text_ripple"
-                android:clickable="true"
-                android:text="@string/prev"
-                android:textSize="24sp"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:id="@+id/prev"/>
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/medium_padding"
-                android:layout_toEndOf="@+id/prev"
-                android:layout_toStartOf="@+id/next"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:text="status"
-                android:textSize="20sp"
-                android:id="@+id/status"
-                android:textColor="@color/colorPrimary"/>
+                android:id="@+id/state_container">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/text_ripple"
-                android:text="@string/next"
-                android:textSize="24sp"
-                android:clickable="true"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/next"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_ripple"
+                    android:clickable="true"
+                    android:text="@string/prev"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/prev"/>
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/medium_padding"
+                    android:layout_toEndOf="@+id/prev"
+                    android:layout_toStartOf="@+id/next"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:text="status"
+                    android:textSize="20sp"
+                    android:id="@+id/status"
+                    android:textColor="@color/colorPrimary"/>
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_ripple"
+                    android:text="@string/next"
+                    android:textSize="24sp"
+                    android:clickable="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/next"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
-    <com.forbitbd.financrr.views.MyViewPager
-        android:layout_width="match_parent"
+        <com.forbitbd.financrr.views.MyViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/month_container"
+            android:id="@+id/viewpager"
+            android:layout_margin="@dimen/small_padding"/>
+    </RelativeLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/month_container"
-        android:id="@+id/viewpager"
-        android:layout_margin="@dimen/small_padding"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit"/>
+
 </RelativeLayout>
+
+

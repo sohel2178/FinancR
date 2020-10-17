@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.forbitbd.androidutils.dialog.DatePickerListener;
 import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
@@ -83,6 +82,7 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Transaction Update or Delete");
 
+        setupBannerAd(R.id.adView);
 
 
         tiDate = findViewById(R.id.ti_date);

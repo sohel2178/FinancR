@@ -60,6 +60,8 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(account.getName().concat(" Details"));
 
+        setupBannerAd(R.id.adView);
+
         mContainer = findViewById(R.id.top_container);
         mHideContainer = findViewById(R.id.hide_container);
         ivIndicator = findViewById(R.id.arrow);

@@ -1,6 +1,5 @@
 package com.forbitbd.financrr.ui.finance;
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.androidutils.models.Project;
@@ -42,7 +41,6 @@ public class FinancePresenter implements FinanceContract.Presenter {
 
     @Override
     public void downloadFile(Project project) {
-        Log.d("UUUUUUUU","hjdsfdshfdsf");
         mView.showProgressDialog();
 
         ApiClient client = ServiceGenerator.createService(ApiClient.class);
@@ -54,9 +52,6 @@ public class FinancePresenter implements FinanceContract.Presenter {
 
                         if(response.isSuccessful()){
                             String path = mView.saveFile(response.body());
-
-                            Log.d("YYYYYY",path);
-
                             if(path!=null){
                                 mView.openFile(path);
                             }

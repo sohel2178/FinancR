@@ -2,7 +2,6 @@ package com.forbitbd.financrr.ui.finance.transaction;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,32 +97,6 @@ public class TransactionFragment extends FinanceBaseFragment
     public void removeRelatedTransactions(Account account) {
         adapter.removeRelatedTransactions(account);
     }
-
-
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode==TRANSACTION_ADD && resultCode== Activity.RESULT_OK){
-            TransactionResponse transaction = (TransactionResponse) data.getSerializableExtra(Constant.TRANSACTION);
-
-            if(transaction!=null){
-                adapter.add(transaction);
-            }
-        }
-
-        if(requestCode==TRANSACTION_UPDATE_DELETE && resultCode==Activity.RESULT_OK){
-            TransactionResponse transaction = (TransactionResponse) data.getSerializableExtra(Constant.TRANSACTION);
-
-            String status = data.getStringExtra(Constant.STATUS);
-
-            if(status.equals(Constant.UPDATE)){
-                adapter.update(transaction);
-            }else if(status.equals(Constant.DELETE)){
-                adapter.remove(transaction);
-            }
-
-        }
-    }*/
 
     @Override
     public void onItemClick(int position) {
