@@ -4,11 +4,21 @@
     <application
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.finance.FinanceActivity"/>
-        <activity android:name=".ui.finance.report.FinanceReportActivity"/>
-        <activity android:name=".ui.finance.account.accountDetail.AccountDetailActivity"/>
-        <activity android:name=".ui.finance.transactionAdd.TransactionAddActivity"/>
-        <activity android:name=".ui.finance.transactionUpdate.TransactionUpdateActivity"/>
+        <activity android:name=".ui.finance.FinanceActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.finance.report.FinanceReportActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.finance.account.accountDetail.AccountDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.finance.transactionAdd.TransactionAddActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.finance.transactionUpdate.TransactionUpdateActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
