@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
 
@@ -24,9 +25,11 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     private List<Account> accountList;
     private List<Account> originalList;
     private LayoutInflater inflater;
+    private SharedProject.Permission financePermission;
 
-    public AccountAdapter(AccountFragment fragment) {
+    public AccountAdapter(AccountFragment fragment,SharedProject.Permission financePermission) {
         this.fragment = fragment;
+        this.financePermission = financePermission;
         this.accountList = new ArrayList<>();
         this.inflater = LayoutInflater.from(fragment.getContext());
     }
@@ -162,6 +165,19 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
 
             ivEdit.setOnClickListener(this);
             ivDelete.setOnClickListener(this);
+
+            // Permission Base Visibility
+            if(financePermission.isUpdate()){
+                ivEdit.setVisibility(View.VISIBLE);
+            }else {
+                ivEdit.setVisibility(View.GONE);
+            }
+
+            if(financePermission.isDelete()){
+                ivDelete.setVisibility(View.VISIBLE);
+            }else {
+                ivDelete.setVisibility(View.GONE);
+            }
         }
 
         @Override

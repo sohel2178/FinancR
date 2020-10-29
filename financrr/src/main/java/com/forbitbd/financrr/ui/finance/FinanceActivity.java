@@ -17,6 +17,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
@@ -45,7 +46,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private static final int TRANSACTION_UPDATE_DELETE=10000;
 
 
-    private Project project;
+    private SharedProject sharedProject;
     private TabLayout tabLayout;
     private ViewPager viewPager; private static final int READ_WRITE_PERMISSION=12000;
     private ViewPagerAdapter pagerAdapter;
@@ -58,7 +59,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance);
 
-        this.project = (Project) getIntent().getSerializableExtra(Constant.PROJECT);
+        this.sharedProject = (SharedProject) getIntent().getSerializableExtra(Constant.PROJECT);
 
         mPresenter = new FinancePresenter(this);
 
@@ -106,6 +107,12 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         fabReport.setOnClickListener(this);
         fabDownload.setOnClickListener(this);
         fabClosing.setOnClickListener(this);
+
+        // Visibility Depending On Project Permission
+        if(!sharedProject.getFinance().isWrite()){
+            fabCreateAccount.setVisibility(View.GONE);
+            fabAddTransaction.setVisibility(View.GONE);
+        }
     }
 
     private void changeQueryText(int position) {
@@ -165,8 +172,8 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
 
 
     @Override
-    public Project getProject() {
-        return this.project;
+    public SharedProject getSharedProject() {
+        return this.sharedProject;
     }
 
     @Override
@@ -195,7 +202,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         addAccountFragment.setCancelable(false);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,getProject());
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         addAccountFragment.setArguments(bundle);
 
         addAccountFragment.show(getSupportFragmentManager(),"JJJJ");
@@ -209,14 +216,14 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
 
     @Override
     public String saveFile(ResponseBody responseBody) {
-        return saveTaskFile("Construction Manager",project.getName(),"Transactions","transaction.xlsx",responseBody);
+        return saveTaskFile("Construction Manager",sharedProject.getProject().getName(),"Transactions","transaction.xlsx",responseBody);
     }
 
     @Override
     public void startAddTransactionActivity() {
         Intent intent = new Intent(getApplicationContext(), TransactionAddActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         intent.putExtras(bundle);
         startActivityForResult(intent,TRANSACTION_ADD);
     }
@@ -225,7 +232,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     public void startFinanceReportActivity() {
         Intent intent = new Intent(getApplicationContext(), FinanceReportActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -240,7 +247,8 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     public void startUpdateOrDeleteActivity(TransactionResponse transaction) {
         Intent intent = new Intent(getApplicationContext(), TransactionUpdateActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
+        bundle.putSerializable("PERMISSION",sharedProject.getFinance());
         bundle.putSerializable(Constant.TRANSACTION,transaction);
 
         intent.putExtras(bundle);
@@ -261,7 +269,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
             requestFileAfterPermission();
         }else if(view==fabClosing){
             Toast.makeText(this, "Closing Click", Toast.LENGTH_SHORT).show();
-            mPresenter.closing(project);
+            mPresenter.closing(sharedProject.getProject());
         }
     }
 
@@ -299,7 +307,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private void requestFileAfterPermission() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
-            mPresenter.downloadFile(project);
+            mPresenter.downloadFile(sharedProject.getProject());
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, "App need to Permission for Read and Write",

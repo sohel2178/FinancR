@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 
 
 public abstract class FinanceBaseFragment extends Fragment {
@@ -23,7 +24,11 @@ public abstract class FinanceBaseFragment extends Fragment {
 
 
     public Project getProject(){
-        return activity.getProject();
+        return activity.getSharedProject().getProject();
+    }
+
+    public SharedProject getSharedProject(){
+        return activity.getSharedProject();
     }
 
     public void showDialog(){

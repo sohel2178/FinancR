@@ -40,7 +40,7 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new AccountPresenter(this);
-        adapter = new AccountAdapter(this);
+        adapter = new AccountAdapter(this,getSharedProject().getFinance());
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.financrr.ui.finance.FinanceActivity;
 
@@ -24,12 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
         Button start = findViewById(R.id.start);
         final Project finalProject = project;
+        final SharedProject sharedProject = new SharedProject(project);
+        sharedProject.getFinance().setWrite(false);
+        sharedProject.getFinance().setUpdate(false);
+        sharedProject.getFinance().setDelete(false);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FinanceActivity.class);
                 Bundle bundle =new Bundle();
-                bundle.putSerializable(Constant.PROJECT, project);
+                bundle.putSerializable(Constant.PROJECT, sharedProject);
                 intent.putExtras(bundle);
                 startActivity(intent);
 

@@ -3,6 +3,7 @@ package com.forbitbd.financrr.ui.finance;
 
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.models.TransactionResponse;
 
@@ -20,7 +21,7 @@ public interface FinanceContract {
     }
 
     interface View{
-        Project getProject();
+        SharedProject getSharedProject();
         void filter(String query);
         void showAccountAddDialog();
         void addAccount(Account account);

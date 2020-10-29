@@ -18,6 +18,7 @@ import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
 import com.forbitbd.androidutils.dialog.delete.DeleteDialog;
 import com.forbitbd.androidutils.dialog.delete.DialogClickListener;
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -63,6 +64,8 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
 
     private Date date;
 
+    private SharedProject.Permission financePermission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,7 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         
         transactionResponse = (TransactionResponse) getIntent().getSerializableExtra(Constant.TRANSACTION);
         project = (Project) getIntent().getSerializableExtra(Constant.PROJECT);
+        this.financePermission = (SharedProject.Permission) getIntent().getSerializableExtra("PERMISSION");
 
         mPresenter = new TransactionUpdatePresenter(this);
         
@@ -133,6 +137,20 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
         btnBrowse.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
+
+
+        if(financePermission.isUpdate()){
+            btnSave.setVisibility(View.VISIBLE);
+        }else {
+            btnSave.setVisibility(View.GONE);
+        }
+
+
+        if(financePermission.isDelete()){
+            btnDelete.setVisibility(View.VISIBLE);
+        }else {
+            btnDelete.setVisibility(View.GONE);
+        }
     }
 
     @Override
