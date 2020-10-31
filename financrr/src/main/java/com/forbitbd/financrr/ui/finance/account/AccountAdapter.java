@@ -200,6 +200,9 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
             if(account.getName().equals("Cash")){
                 ivDelete.setVisibility(View.INVISIBLE);
                 ivEdit.setVisibility(View.INVISIBLE);
+            }else {
+                ivDelete.setVisibility(View.VISIBLE);
+                ivEdit.setVisibility(View.VISIBLE);
             }
         }
     }
