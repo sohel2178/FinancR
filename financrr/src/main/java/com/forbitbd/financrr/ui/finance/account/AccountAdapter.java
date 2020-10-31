@@ -166,18 +166,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
             ivEdit.setOnClickListener(this);
             ivDelete.setOnClickListener(this);
 
-            // Permission Base Visibility
-            if(financePermission.isUpdate()){
-                ivEdit.setVisibility(View.VISIBLE);
-            }else {
-                ivEdit.setVisibility(View.GONE);
-            }
 
-            if(financePermission.isDelete()){
-                ivDelete.setVisibility(View.VISIBLE);
-            }else {
-                ivDelete.setVisibility(View.GONE);
-            }
         }
 
         @Override
@@ -201,8 +190,18 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
                 ivDelete.setVisibility(View.INVISIBLE);
                 ivEdit.setVisibility(View.INVISIBLE);
             }else {
-                ivDelete.setVisibility(View.VISIBLE);
-                ivEdit.setVisibility(View.VISIBLE);
+                // Permission Base Visibility
+                if(financePermission.isUpdate()){
+                    ivEdit.setVisibility(View.VISIBLE);
+                }else {
+                    ivEdit.setVisibility(View.GONE);
+                }
+
+                if(financePermission.isDelete()){
+                    ivDelete.setVisibility(View.VISIBLE);
+                }else {
+                    ivDelete.setVisibility(View.GONE);
+                }
             }
         }
     }

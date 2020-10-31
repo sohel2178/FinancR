@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         final Project finalProject = project;
         final SharedProject sharedProject = new SharedProject(project);
         sharedProject.getFinance().setWrite(false);
-        sharedProject.getFinance().setUpdate(false);
+        sharedProject.getFinance().setUpdate(true);
         sharedProject.getFinance().setDelete(false);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
