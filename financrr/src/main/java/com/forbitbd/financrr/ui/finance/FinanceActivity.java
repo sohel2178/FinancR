@@ -122,7 +122,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
                 break;
 
             case 1:
-                searchView.setQueryHint("Search by Invoice or Purpose");
+                searchView.setQueryHint("Search by Account, Invoice or Purpose");
                 break;
         }
     }

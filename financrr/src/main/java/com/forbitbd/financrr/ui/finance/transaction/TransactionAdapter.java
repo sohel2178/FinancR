@@ -89,6 +89,8 @@ public class TransactionAdapter extends BaseAdapter<TransactionResponse, Transac
                         if(
                                 x.getPurpose().toLowerCase().contains(charString.toLowerCase())
                                 || x.getInvoice_no().toLowerCase().contains(charString.toLowerCase())
+                                || x.getTo().getName().toLowerCase().contains(charString.toLowerCase())
+                                || x.getFrom().getName().toLowerCase().contains(charString.toLowerCase())
                         ){
                             tmpList.add(x);
                         }
