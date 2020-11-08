@@ -281,8 +281,18 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
 
     @Override
     public void updateSpinnerAdapter(List<Account> accountList) {
-        fromAdapter.addAll(accountList);
-        toAdapter.addAll(accountList);
+        for (Account x:accountList){
+            if(x.getType()==0){
+                toAdapter.add(x);
+            }else if(x.getType()==1){
+                fromAdapter.add(x);
+            }else {
+                toAdapter.add(x);
+                fromAdapter.add(x);
+            }
+        }
+//        fromAdapter.addAll(accountList);
+//        toAdapter.addAll(accountList);
         mPresenter.bind(transactionResponse);
     }
 

@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Button start = findViewById(R.id.start);
         final Project finalProject = project;
         final SharedProject sharedProject = new SharedProject(project);
-        sharedProject.getFinance().setWrite(false);
+        sharedProject.getFinance().setWrite(true);
         sharedProject.getFinance().setUpdate(true);
-        sharedProject.getFinance().setDelete(false);
+        sharedProject.getFinance().setDelete(true);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
