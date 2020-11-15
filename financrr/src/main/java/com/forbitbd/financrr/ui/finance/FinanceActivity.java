@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -48,7 +47,8 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
 
     private SharedProject sharedProject;
     private TabLayout tabLayout;
-    private ViewPager viewPager; private static final int READ_WRITE_PERMISSION=12000;
+    private ViewPager viewPager;
+    private static final int READ_WRITE_PERMISSION=12000;
     private ViewPagerAdapter pagerAdapter;
     private SearchView searchView;
 
@@ -58,7 +58,6 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance);
-
         this.sharedProject = (SharedProject) getIntent().getSerializableExtra(Constant.PROJECT);
 
         mPresenter = new FinancePresenter(this);
@@ -69,9 +68,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     private void initView() {
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(getString(R.string.finance));
-
         setupBannerAd(R.id.adView);
-
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);

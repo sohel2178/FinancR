@@ -92,6 +92,12 @@ public class AccountDetailPresenter implements AccountDetailContract.Presenter {
                 mView.renderTransactionList(getCreditList(account,transactionList));
                 break;
 
+            case 3:
+                mView.renderTransactionList(transactionList);
+                break;
+
+
+
 
         }
     }

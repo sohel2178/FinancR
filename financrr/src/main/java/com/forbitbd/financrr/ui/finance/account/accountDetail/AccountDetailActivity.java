@@ -2,6 +2,7 @@ package com.forbitbd.financrr.ui.finance.account.accountDetail;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -20,6 +21,7 @@ import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.models.TransactionResponse;
+import com.forbitbd.financrr.ui.finance.account.accountDetail.accountFlow.AccountFlowFragment;
 import com.forbitbd.financrr.ui.finance.account.accountDetail.transaction.AccountTransactionFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -146,8 +148,16 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
 
     @Override
     public void renderTransactionList(List<TransactionResponse> transactionResponseList) {
-        AccountTransactionFragment atf = (AccountTransactionFragment) adapter.getItem(viewPager.getCurrentItem());
-        atf.render(transactionResponseList);
+
+        if(adapter.getItem(viewPager.getCurrentItem()) instanceof AccountTransactionFragment){
+            AccountTransactionFragment atf = (AccountTransactionFragment) adapter.getItem(viewPager.getCurrentItem());
+            atf.render(transactionResponseList);
+        }else if(adapter.getItem(viewPager.getCurrentItem()) instanceof AccountFlowFragment){
+            AccountFlowFragment aff = (AccountFlowFragment) adapter.getItem(viewPager.getCurrentItem());
+            aff.render(account,transactionResponseList);
+        }
+
+
     }
 
     @Override
@@ -200,6 +210,7 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
         adapter.addFragment(new AccountTransactionFragment(), "ALL");
         adapter.addFragment(new AccountTransactionFragment(), "DEBIT");
         adapter.addFragment(new AccountTransactionFragment(), "CREDIT");
+        adapter.addFragment(new AccountFlowFragment(),"FLOW");
         //adapter.addFragment(new ThreeFragment(), "THREE");
         viewPager.setAdapter(adapter);
     }
