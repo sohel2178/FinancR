@@ -19,6 +19,7 @@ import com.forbitbd.androidutils.dialog.delete.DeleteDialog;
 import com.forbitbd.androidutils.dialog.delete.DialogClickListener;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -152,6 +153,16 @@ public class TransactionUpdateActivity extends PrebaseActivity implements Transa
             btnDelete.setVisibility(View.GONE);
         }
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()>Constant.COUNTER){
+            showInterAd();
+        }
+    }
+
 
     @Override
     public void onClick(View view) {

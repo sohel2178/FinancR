@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
@@ -118,6 +119,15 @@ public class AccountDetailActivity extends PrebaseActivity implements AccountDet
 
 
         mPresenter.getAllTransactionsForAccount(account);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(AppPreference.getInstance(this).getCounter()>Constant.COUNTER){
+            showInterAd();
+        }
     }
 
     @Override

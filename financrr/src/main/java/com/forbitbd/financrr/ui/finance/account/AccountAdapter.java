@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
 
@@ -173,10 +174,13 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         public void onClick(View view) {
 
             if(view==itemView){
+                AppPreference.getInstance(view.getContext()).increaseCounter();
                 fragment.startAccountDetailActivity(accountList.get(getAdapterPosition()));
             }else if(view==ivEdit){
+                AppPreference.getInstance(view.getContext()).increaseCounter();
                 fragment.editAccountRequest(accountList.get(getAdapterPosition()));
             }else if(view== ivDelete){
+                AppPreference.getInstance(view.getContext()).increaseCounter();
                 fragment.showDeleteDialog(accountList.get(getAdapterPosition()));
             }
 

@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forbitbd.androidutils.baseAdapter.BaseHolder;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.TransactionResponse;
@@ -35,6 +36,7 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
 
     @Override
     public void onClick(View view) {
+        AppPreference.getInstance(view.getContext()).increaseCounter();
         if(view==itemView){
             listener.onItemClick(getAdapterPosition());
         }else if(view==ivAttach){

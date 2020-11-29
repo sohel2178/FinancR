@@ -17,6 +17,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
@@ -109,6 +110,14 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         if(!sharedProject.getFinance().isWrite()){
             fabCreateAccount.setVisibility(View.GONE);
             fabAddTransaction.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()>Constant.COUNTER){
+            showInterAd();
         }
     }
 
@@ -257,10 +266,13 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
     public void onClick(View view) {
 
         if(view==fabCreateAccount){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.showAccountAddDialog();
         }else if(view==fabAddTransaction){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startAddTransactionActivity();
         }else if(view==fabReport){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startFinanceReportActivity();
         }else if(view==fabDownload){
             requestFileAfterPermission();

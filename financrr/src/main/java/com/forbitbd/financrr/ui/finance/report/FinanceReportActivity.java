@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
@@ -70,6 +71,14 @@ public class FinanceReportActivity extends PrebaseActivity
         mPresenter.getFinanceData(project.get_id());
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()>Constant.COUNTER){
+            showInterAd();
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
