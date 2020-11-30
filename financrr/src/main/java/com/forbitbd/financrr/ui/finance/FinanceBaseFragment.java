@@ -49,4 +49,8 @@ public abstract class FinanceBaseFragment extends Fragment {
         return this.activity;
     }
 
+    public void showTapTargetView(String title,String content){
+        activity.showTapTargetView(title,content);
+    }
+
 }

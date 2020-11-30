@@ -3,6 +3,7 @@ package com.forbitbd.financrr.ui.finance;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,6 +31,8 @@ import com.forbitbd.financrr.ui.finance.report.FinanceReportActivity;
 import com.forbitbd.financrr.ui.finance.transaction.TransactionFragment;
 import com.forbitbd.financrr.ui.finance.transactionAdd.TransactionAddActivity;
 import com.forbitbd.financrr.ui.finance.transactionUpdate.TransactionUpdateActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -86,6 +89,7 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
             @Override
             public void onPageSelected(int position) {
                 changeQueryText(position);
+                tapTargetSetting(position);
             }
 
             @Override
@@ -131,6 +135,16 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
                 searchView.setQueryHint("Search by Account, Invoice or Purpose");
                 break;
         }
+    }
+
+    private void tapTargetSetting(int position){
+        if(position==1){
+            TransactionFragment tf = (TransactionFragment) pagerAdapter.getItem(position);
+            if(tf.getTransactionCount()==0){
+                showTapTargetView("Add New Transaction","To add a New Transaction Click the Blinking Button");
+            }
+        }
+
     }
 
     @Override
@@ -260,6 +274,40 @@ public class FinanceActivity extends PrebaseActivity implements FinanceContract.
         intent.putExtras(bundle);
 
         startActivityForResult(intent,TRANSACTION_UPDATE_DELETE);
+    }
+
+    @Override
+    public void showTapTargetView( String title, String content) {
+        View view;
+        if(viewPager.getCurrentItem()==0){
+            view = fabCreateAccount;
+        }else{
+           view = fabAddTransaction;
+        }
+
+        if(sharedProject.getFinance().isWrite()){
+            TapTargetView.showFor(this,
+                    TapTarget.forView(view,title,content)
+                            .outerCircleColor(R.color.statusColor)
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.colorAccent)
+                            .tintTarget(false)
+                            .textTypeface(Typeface.MONOSPACE)
+                    ,new TapTargetView.Listener(){
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            super.onTargetClick(view);
+                            //startAddTaskActivity();
+                            if(viewPager.getCurrentItem()==0){
+                                mPresenter.showAccountAddDialog();
+                            }else if(viewPager.getCurrentItem()==1){
+                                mPresenter.startAddTransactionActivity();
+                            }
+                        }
+                    });
+        }
+
+
     }
 
     @Override

@@ -33,5 +33,6 @@ public interface FinanceContract {
         void startFinanceReportActivity();
         void removeRelatedTransactions(Account account);
         void startUpdateOrDeleteActivity(TransactionResponse transaction);
+        void showTapTargetView(String title,String content);
     }
 }

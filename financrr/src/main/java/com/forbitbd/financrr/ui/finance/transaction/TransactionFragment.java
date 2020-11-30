@@ -66,6 +66,10 @@ public class TransactionFragment extends FinanceBaseFragment
 
     }
 
+    public int getTransactionCount(){
+        return this.adapter.getItemCount();
+    }
+
 
 
 

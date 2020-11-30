@@ -77,11 +77,19 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
         for (Account x: accountList){
             adapter.addAccount(x);
         }
+
+        if(accountList.size()<=1){
+            showTapTargetView("Create a New Account","To Create a new Account Click the Blinking Circle...");
+        }
     }
 
     @Override
     public void addAccount(Account account) {
         adapter.addAccountInPosition(account);
+    }
+
+    public int getAccountCount(){
+        return adapter.getItemCount();
     }
 
     @Override
