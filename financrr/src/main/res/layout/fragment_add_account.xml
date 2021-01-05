@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arima_madurai_medium"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned"
                     android:text="0"
                     android:theme="@style/TIStyle" />
 
