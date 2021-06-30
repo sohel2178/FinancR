@@ -1,29 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.forbitbd.financrr" >
+    package="com.forbitbd.financrr">
 
-    <application
-        android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.finance.FinanceActivity"
+    <application android:theme="@style/AppTheme">
+        <activity android:name=".ui.newFinance.NewFinanceActivity"></activity>
+        <activity
+            android:name=".ui.finance.FinanceActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.finance.report.FinanceReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.finance.report.FinanceReportActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.finance.account.accountDetail.AccountDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.finance.account.accountDetail.AccountDetailActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.finance.transactionAdd.TransactionAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.finance.transactionAdd.TransactionAddActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.finance.transactionUpdate.TransactionUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.finance.transactionUpdate.TransactionUpdateActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
     </application>
-</manifest>
 
+</manifest>

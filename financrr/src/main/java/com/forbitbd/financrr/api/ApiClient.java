@@ -4,6 +4,7 @@ package com.forbitbd.financrr.api;
 
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.models.ClosingResponse;
+import com.forbitbd.financrr.models.Dashboard;
 import com.forbitbd.financrr.models.FinanceResponce;
 import com.forbitbd.financrr.models.TransactionResponse;
 
@@ -51,6 +52,15 @@ public interface ApiClient {
     // Transactions
     @GET("/civil/api/projects/{project_id}/transactions")
     Call<List<TransactionResponse>> getProjectTransactions(@Path("project_id") String projectId);
+
+    @GET("/civil/api/projects/{project_id}/transactions/recent")
+    Call<List<TransactionResponse>> getProjectRecentTransactions(@Path("project_id") String projectId);
+
+    @GET("/civil/api/projects/{project_id}/transactions/topfive")
+    Call<List<TransactionResponse>> getProjectTopFiveTransactions(@Path("project_id") String projectId);
+
+    @GET("/civil/api/projects/{project_id}/transactions/dashboard")
+    Call<Dashboard> getDashboard(@Path("project_id") String projectId);
 
     @GET("/civil/api/projects/{project_id}/transactions/download")
     Call<ResponseBody> getDownloadFile(@Path("project_id") String projectId);

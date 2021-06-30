@@ -11,6 +11,7 @@ public interface AccountContract {
     interface Presenter{
         void getProjectAccounts(String projectId);
         void deleteAccountFromDatabase(Account account);
+        void showAccountAddDialog();
     }
 
 
@@ -25,6 +26,7 @@ public interface AccountContract {
         void startAccountDetailActivity(Account account);
         void showDeleteDialog(Account account);
         void removeAccountFromAdapter(Account account);
+        void showAccountAddDialog();
 
     }
 }

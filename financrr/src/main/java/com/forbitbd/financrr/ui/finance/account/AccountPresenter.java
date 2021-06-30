@@ -69,4 +69,9 @@ public class AccountPresenter implements AccountContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void showAccountAddDialog() {
+        mView.showAccountAddDialog();
+    }
 }

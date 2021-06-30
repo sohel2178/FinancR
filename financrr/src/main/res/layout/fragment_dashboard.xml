@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/default_margin"
+    android:orientation="vertical"
+    tools:context=".ui.newFinance.dashboard.DashboardFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <fragment
+        android:id="@+id/info_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.forbitbd.financrr.ui.newFinance.dashboard.info.InfoFragment"
+        tools:layout="@layout/fragment_info"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemIconTint="@drawable/bottom_nav"
+            app:itemTextColor="@drawable/bottom_nav"
+            app:menu="@menu/finance_transaction_menu" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/transaction_container"/>
+    </LinearLayout>
+
+</LinearLayout>

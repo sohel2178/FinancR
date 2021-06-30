@@ -93,6 +93,7 @@
                 android:layout_gravity="center_horizontal"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="@string/cancel"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/cancel"/>
 
             <com.google.android.material.button.MaterialButton
@@ -102,6 +103,7 @@
                 android:layout_gravity="center_horizontal"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="@string/save"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/save"/>
 
         </RelativeLayout>

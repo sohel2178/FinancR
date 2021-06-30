@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
@@ -9,5 +10,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
         android:padding="@dimen/default_margin"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/fab_add_account"
+        app:backgroundTint="@color/colorAccent"
+        android:contentDescription="@string/create_new_account"
+        app:tint="@android:color/background_light"
+        app:srcCompat="@drawable/fab_add"/>
 
 </RelativeLayout>

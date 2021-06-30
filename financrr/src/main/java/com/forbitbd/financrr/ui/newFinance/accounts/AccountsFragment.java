@@ -1,5 +1,4 @@
-package com.forbitbd.financrr.ui.finance.account;
-
+package com.forbitbd.financrr.ui.newFinance.accounts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,40 +11,49 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.forbitbd.androidutils.dialog.delete.DeleteDialog;
 import com.forbitbd.androidutils.dialog.delete.DialogClickListener;
+import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.Constant;
 import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
-import com.forbitbd.financrr.ui.finance.FinanceBaseFragment;
+import com.forbitbd.financrr.ui.finance.account.AccountAdapter;
+import com.forbitbd.financrr.ui.finance.account.AccountContract;
+import com.forbitbd.financrr.ui.finance.account.AccountPresenter;
 import com.forbitbd.financrr.ui.finance.account.accountDetail.AccountDetailActivity;
 import com.forbitbd.financrr.ui.finance.accountAdd.AddAccountFragment;
+import com.forbitbd.financrr.ui.newFinance.BaseFragment;
+import com.forbitbd.financrr.ui.newFinance.TitleListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AccountFragment extends FinanceBaseFragment implements AccountContract.View{
+public class AccountsFragment extends Fragment implements AccountContract.View , View.OnClickListener,AccountsListener {
 
     private AccountAdapter adapter;
     private AccountPresenter mPresenter;
+    private SharedProject sharedProject;
 
-    public AccountFragment() {
-        // Required empty public constructor
+    private TitleListener listener;
+
+    private FloatingActionButton fabAddAccount;
+
+
+
+
+    public void filter(String query) {
+        adapter.getFilter().filter(query);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new AccountPresenter(this);
-        adapter = new AccountAdapter(this,getSharedProject().getFinance());
-    }
 
-    @Override
-    public void filter(String query) {
-        adapter.getFilter().filter(query);
+        this.listener = (TitleListener) getActivity();
+        mPresenter = new AccountPresenter(this);
+        sharedProject = (SharedProject) getArguments().getSerializable(Constant.PROJECT);
+        adapter = new AccountAdapter(this,sharedProject.getFinance());
     }
 
     @Override
@@ -58,17 +66,34 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
     }
 
     private void initView(View view) {
-
-
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
 
-        mPresenter.getProjectAccounts(getProject().get_id());
+        fabAddAccount = view.findViewById(R.id.fab_add_account);
+        fabAddAccount.setOnClickListener(this);
+
+        mPresenter.getProjectAccounts(sharedProject.getProject().get_id());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener.setTitle("Accounts");
+        listener.visibleMenu();
+    }
 
+    @Override
+    public void showDialog() {
+        listener.showProgressDialog();
+    }
+
+    @Override
+    public void hideDialog() {
+        listener.hideProgressDialog();
+    }
 
     @Override
     public void renderAdapter(List<Account> accountList) {
@@ -79,7 +104,7 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
         }
 
         if(accountList.size()<=1){
-            showTapTargetView("Create a New Account","To Create a new Account Click the Blinking Circle...");
+//            showTapTargetView("Create a New Account","To Create a new Account Click the Blinking Circle...");
         }
     }
 
@@ -88,8 +113,9 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
         adapter.addAccountInPosition(account);
     }
 
-    public int getAccountCount(){
-        return adapter.getItemCount();
+    @Override
+    public void updateAccount(Account account) {
+        updateAccountInAdapter(account);
     }
 
     @Override
@@ -98,7 +124,7 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
         addAccountFragment.setCancelable(false);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,getProject());
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.ACCOUNT, account);
         addAccountFragment.setArguments(bundle);
 
@@ -114,7 +140,7 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
     @Override
     public void startAccountDetailActivity(Account account) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,getProject());
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.ACCOUNT, account);
 
         Intent intent = new Intent(getContext(), AccountDetailActivity.class);
@@ -143,11 +169,22 @@ public class AccountFragment extends FinanceBaseFragment implements AccountContr
     @Override
     public void removeAccountFromAdapter(Account account) {
         adapter.removeAccount(account);
-        get_activity().removeRelatedTransactions(account);
+        //get_activity().removeRelatedTransactions(account);
     }
 
     @Override
     public void showAccountAddDialog() {
+        AddAccountFragment addAccountFragment = new AddAccountFragment();
+        addAccountFragment.setCancelable(false);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
+        addAccountFragment.setArguments(bundle);
+        addAccountFragment.show(getChildFragmentManager(),"JJJJ");
+    }
 
+    @Override
+    public void onClick(View view) {
+        AppPreference.getInstance(getContext()).increaseCounter();
+        mPresenter.showAccountAddDialog();
     }
 }

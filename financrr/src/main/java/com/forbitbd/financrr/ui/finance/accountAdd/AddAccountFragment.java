@@ -21,6 +21,8 @@ import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
 import com.forbitbd.financrr.ui.finance.FinanceActivity;
 import com.forbitbd.financrr.ui.finance.account.AccountFragment;
+import com.forbitbd.financrr.ui.newFinance.accounts.AccountsFragment;
+import com.forbitbd.financrr.ui.newFinance.accounts.AccountsListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,6 +42,8 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
     MaterialButton btnSave,btnCancel;
 
+    private AccountsListener listener;
+
 
 
     private Account account;
@@ -54,6 +58,7 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.listener = (AccountsListener) getParentFragment();
         mPresenter = new AddAccountPresenter(this);
         this.account = (Account) getArguments().getSerializable(Constant.ACCOUNT);
         this.project = (Project) getArguments().getSerializable(Constant.PROJECT);
@@ -174,9 +179,11 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
 
     @Override
     public void showDialog() {
-        if(getParentFragment() instanceof AccountFragment){
+        if(getParentFragment() instanceof AccountFragment ){
             AccountFragment af = (AccountFragment) getParentFragment();
             af.showDialog();
+        }else if(getParentFragment() instanceof AccountsFragment){
+            listener.showDialog();
         }
 
     }
@@ -186,6 +193,8 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
         if(getParentFragment() instanceof AccountFragment){
             AccountFragment af = (AccountFragment) getParentFragment();
             af.hideDialog();
+        }else if(getParentFragment() instanceof AccountsFragment){
+            listener.hideDialog();
         }
     }
 
@@ -196,6 +205,8 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
         if(getActivity() instanceof FinanceActivity){
             FinanceActivity fa = (FinanceActivity) getActivity();
             fa.addAccount(account);
+        }else {
+            listener.addAccount(account);
         }
     }
 
@@ -206,6 +217,8 @@ public class AddAccountFragment extends DialogFragment implements AddAccountCont
         if(getParentFragment() instanceof AccountFragment){
             AccountFragment af = (AccountFragment) getParentFragment();
             af.updateAccountInAdapter(account);
+        }else {
+            listener.updateAccount(account);
         }
     }
 }

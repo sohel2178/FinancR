@@ -18,26 +18,31 @@ import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.Account;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountHolder> implements Filterable {
 
-    private AccountFragment fragment;
+    private AccountContract.View mView;
     private List<Account> accountList;
     private List<Account> originalList;
-    private LayoutInflater inflater;
     private SharedProject.Permission financePermission;
 
-    public AccountAdapter(AccountFragment fragment,SharedProject.Permission financePermission) {
-        this.fragment = fragment;
+    public AccountAdapter(AccountContract.View  mView,SharedProject.Permission financePermission) {
+        this.mView = mView;
         this.financePermission = financePermission;
         this.accountList = new ArrayList<>();
-        this.inflater = LayoutInflater.from(fragment.getContext());
     }
+
+
+
+
 
     @NonNull
     @Override
     public AccountHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_account,parent,false);
         return new AccountHolder(view);
     }
@@ -64,10 +69,23 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         notifyItemInserted(position);
     }
 
+
     public void addAccountInPosition(Account account){
-        int position = getPosition(account);
-        accountList.add(position,account);
-        notifyItemInserted(position);
+        accountList.add(account);
+
+        Collections.sort(accountList, new Comparator<Account>() {
+            @Override
+            public int compare(Account account, Account t1) {
+                return account.getName().toLowerCase().compareTo(t1.getName().toLowerCase());
+            }
+        });
+
+        notifyDataSetChanged();
+
+
+//        int position = getPosition(account);
+//        accountList.add(position,account);
+//        notifyItemInserted(position);
     }
 
     private int getPosition(Account account){
@@ -102,6 +120,9 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         accountList.remove(position);
         notifyItemRemoved(position);
     }
+
+
+
 
 
 
@@ -149,6 +170,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     }
 
 
+
     class AccountHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvType,tvName;
@@ -175,19 +197,19 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
 
             if(view==itemView){
                 AppPreference.getInstance(view.getContext()).increaseCounter();
-                fragment.startAccountDetailActivity(accountList.get(getAdapterPosition()));
+                mView.startAccountDetailActivity(accountList.get(getAdapterPosition()));
             }else if(view==ivEdit){
                 AppPreference.getInstance(view.getContext()).increaseCounter();
-                fragment.editAccountRequest(accountList.get(getAdapterPosition()));
+                mView.editAccountRequest(accountList.get(getAdapterPosition()));
             }else if(view== ivDelete){
                 AppPreference.getInstance(view.getContext()).increaseCounter();
-                fragment.showDeleteDialog(accountList.get(getAdapterPosition()));
+                mView.showDeleteDialog(accountList.get(getAdapterPosition()));
             }
 
         }
 
         public void bind(Account account){
-            tvType.setText(fragment.getResources().getStringArray(R.array.account_type)[account.getType()]);
+            tvType.setText(itemView.getResources().getStringArray(R.array.account_type)[account.getType()]);
             tvName.setText(account.getName());
 
             if(account.getName().equals("Cash")){
