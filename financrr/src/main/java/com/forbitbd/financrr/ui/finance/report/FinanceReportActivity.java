@@ -40,7 +40,7 @@ public class FinanceReportActivity extends PrebaseActivity
 
     TextView tvPrev,tvNext;
 
-    private String[] titleArray= {"Trial Balance","Daily Transactions","Monthly Transactions","Cash Flow"};
+    private String[] titleArray= {"Trial Balance","Monthly Transactions","Daily Transactions","Cash Flow"};
 
 
 
@@ -86,8 +86,8 @@ public class FinanceReportActivity extends PrebaseActivity
             pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         }
         pagerAdapter.addFragment(new TrialBalanceFragment(), "Trial Balance");
-        pagerAdapter.addFragment(new DailyTransactionFragment(), "Daily Transaction");
         pagerAdapter.addFragment(new MonthlyTransactionFragment(), "Monthly Transaction");
+        pagerAdapter.addFragment(new DailyTransactionFragment(), "Daily Transaction");
         pagerAdapter.addFragment(new CashFlowFragment(), "Cash Flow");
         //pagerAdapter.addFragment(new TransactionFragment(), "Transactions");
 

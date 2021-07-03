@@ -82,6 +82,12 @@ public class NewFinanceActivity extends PrebaseActivity implements NewFinanceCon
         bundle.putSerializable(Constant.PROJECT,sharedProject);
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                R.anim.slide_up,  // enter
+                R.anim.slide_down,  // exit
+                R.anim.fade_in,   // popEnter
+                R.anim.fade_out  // popExit
+        );
         transaction.replace(R.id.container, fragment, "CURRENT_FRAGMENT");
         transaction.commit();
     }

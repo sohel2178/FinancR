@@ -1,6 +1,7 @@
 package com.forbitbd.financrr.ui.newFinance.dashboard.info;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class InfoFragment extends Fragment implements InfoContract.View, View.On
     private InfoPresenter mPresenter;
 
     private TextView tvBalance,tvIncome,tvExpenses,tvNumberOfAccounts,tvNumberOfTransactions;
+//    private LinearLayout lHint;
 
     private MaterialButton btnReport,btnDownload;
 
@@ -72,6 +75,7 @@ public class InfoFragment extends Fragment implements InfoContract.View, View.On
         tvExpenses = view.findViewById(R.id.expenses);
         tvNumberOfAccounts = view.findViewById(R.id.accounts_count);
         tvNumberOfTransactions = view.findViewById(R.id.transactions_count);
+//        lHint = view.findViewById(R.id.hint);
 
         btnReport = view.findViewById(R.id.report);
         btnDownload = view.findViewById(R.id.download);
@@ -81,6 +85,11 @@ public class InfoFragment extends Fragment implements InfoContract.View, View.On
         if(listener!=null){
             mPresenter.getDashboardData(listener.getSharedProject().getProject().get_id());
         }
+
+//        ObjectAnimator animation = ObjectAnimator.ofFloat(lHint, "translationX", 100f);
+//        animation.setDuration(2000);
+//        animation.start();
+
 
 
 

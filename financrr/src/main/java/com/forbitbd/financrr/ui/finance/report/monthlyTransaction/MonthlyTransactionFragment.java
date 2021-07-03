@@ -2,13 +2,17 @@ package com.forbitbd.financrr.ui.finance.report.monthlyTransaction;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +22,13 @@ import com.forbitbd.financrr.R;
 import com.forbitbd.financrr.models.TransactionResponse;
 import com.forbitbd.financrr.ui.finance.account.accountDetail.transactionDetail.TransactionDetailFragment;
 import com.forbitbd.financrr.ui.finance.report.FinanceReportBaseFragment;
+import com.forbitbd.financrr.ui.finance.report.monthlyTransaction.all.AllFragment;
+import com.forbitbd.financrr.ui.finance.report.monthlyTransaction.summery.SummeryFragment;
 import com.forbitbd.financrr.ui.finance.transaction.TransactionAdapter;
 import com.forbitbd.financrr.ui.finance.transaction.TransactionListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -32,13 +40,14 @@ public class MonthlyTransactionFragment extends FinanceReportBaseFragment
 
 
     private MonthlyTransactionPresenter mPresenter;
-    private TransactionAdapter adapter;
 
     private TextView tvStatus;
 
     private int currentMonth,currentYear;
 
     private TextView tvPrev,tvNext;
+
+    private BottomNavigationView bottomNavigationView;
 
 
     public MonthlyTransactionFragment() {
@@ -49,8 +58,6 @@ public class MonthlyTransactionFragment extends FinanceReportBaseFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new MonthlyTransactionPresenter(this);
-
-        adapter = new TransactionAdapter(getContext(),this);
         this.currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         this.currentYear = Calendar.getInstance().get(Calendar.YEAR);
     }
@@ -72,14 +79,43 @@ public class MonthlyTransactionFragment extends FinanceReportBaseFragment
         tvStatus = view.findViewById(R.id.status);
         tvStatus.setText(getStringDate());
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+
 
 
         tvPrev.setOnClickListener(this);
         tvNext.setOnClickListener(this);
         mPresenter.processTransactions(getTransactions(),currentYear,currentMonth);
+
+        bottomNavigationView = view.findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if(id==R.id.summery){
+                    loadFragment(new SummeryFragment());
+                    return true;
+                }else if(id==R.id.transactions){
+                    loadFragment(new AllFragment());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        loadFragment(new SummeryFragment());
+    }
+
+    public void loadFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.TRANSACTION, (Serializable) getTransactions());
+        bundle.putInt("YEAR",currentYear);
+        bundle.putInt("MONTH",currentMonth);
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.monthly_container, fragment, "CURRENT_TRANSACTION");
+        transaction.commit();
     }
 
     @Override
@@ -87,29 +123,43 @@ public class MonthlyTransactionFragment extends FinanceReportBaseFragment
 
         if(view==tvPrev){
             decrease();
-            mPresenter.processTransactions(getTransactions(),currentYear,currentMonth);
+//            mPresenter.processTransactions(getTransactions(),currentYear,currentMonth);
 
         }else if(view==tvNext){
             increase();
-            mPresenter.processTransactions(getTransactions(),currentYear,currentMonth);
+//            mPresenter.processTransactions(getTransactions(),currentYear,currentMonth);
         }
 
+        update();
+
+    }
+
+
+    private void update(){
+        if(getChildFragmentManager().findFragmentByTag("CURRENT_TRANSACTION") instanceof AllFragment){
+            AllFragment allF = (AllFragment) getChildFragmentManager().findFragmentByTag("CURRENT_TRANSACTION");
+            allF.update(currentYear,currentMonth);
+        }else if(getChildFragmentManager().findFragmentByTag("CURRENT_TRANSACTION") instanceof SummeryFragment){
+            SummeryFragment allF = (SummeryFragment) getChildFragmentManager().findFragmentByTag("CURRENT_TRANSACTION");
+            allF.update(currentYear,currentMonth);
+        }
+        tvStatus.setText(getStringDate());
     }
 
     @Override
     public void onImageClick(int position) {
-        startZoomImageActivity(adapter.getItem(position).getImage());
+//        startZoomImageActivity(adapter.getItem(position).getImage());
     }
 
     @Override
     public void onItemClick(int position) {
-        TransactionDetailFragment tdf = new TransactionDetailFragment();
-        tdf.setCancelable(false);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.TRANSACTION,adapter.getItem(position));
-        tdf.setArguments(bundle);
-
-        tdf.show(getChildFragmentManager(),"HHHH");
+//        TransactionDetailFragment tdf = new TransactionDetailFragment();
+//        tdf.setCancelable(false);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Constant.TRANSACTION,adapter.getItem(position));
+//        tdf.setArguments(bundle);
+//
+//        tdf.show(getChildFragmentManager(),"HHHH");
 
     }
 
@@ -147,6 +197,6 @@ public class MonthlyTransactionFragment extends FinanceReportBaseFragment
     @Override
     public void renderAdapter(List<TransactionResponse> transactionList) {
         tvStatus.setText(getStringDate());
-        adapter.setItems(transactionList);
+//        adapter.setItems(transactionList);
     }
 }

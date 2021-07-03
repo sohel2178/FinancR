@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/default_margin"
     app:cardCornerRadius="@dimen/small_padding"
-    app:cardBackgroundColor="@android:color/holo_orange_dark"
+    app:cardBackgroundColor="@android:color/primary_text_dark"
     tools:context=".ui.newFinance.dashboard.info.InfoFragment">
 
     <LinearLayout
@@ -14,6 +14,30 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/medium_padding"
         android:orientation="vertical">
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/hint"-->
+<!--            android:gravity="end">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Every Pink ( "-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:textSize="18sp"/>-->
+<!--            <View-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:background="@color/colorAccent"/>-->
+<!--            <TextView-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=" ) Color is Clickable"/>-->
+<!--        </LinearLayout>-->
 
         <TextView
             android:layout_width="match_parent"
