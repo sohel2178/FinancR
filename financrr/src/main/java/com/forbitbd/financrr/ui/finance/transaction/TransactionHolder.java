@@ -29,7 +29,11 @@ public class TransactionHolder extends BaseHolder<TransactionResponse, Transacti
 
         ivAttach = itemView.findViewById(R.id.attach);
 
-        ivAttach.setOnClickListener(this);
+        if(ivAttach!=null){
+            ivAttach.setOnClickListener(this);
+        }
+
+
 
         itemView.setOnClickListener(this);
     }
